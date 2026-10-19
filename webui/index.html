@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Muse by Meta 注册机</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f7fa; color: #303133; font-size: 14px; }
+  header { background: #fff; border-bottom: 1px solid #ebeef5; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
+  header h1 { font-size: 18px; font-weight: 600; }
+  header h1 span { color: #6ea8fe; }
+  main { padding: 20px 24px; }
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid #ebeef5; margin-bottom: 20px; overflow-x: auto; }
+  .tab { padding: 10px 18px; cursor: pointer; border-bottom: 2px solid transparent; color: #606266; font-weight: 500; white-space: nowrap; }
+  .tab.active { color: #377dff; border-bottom-color: #377dff; }
+  .tab:hover { color: #377dff; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .card { background: #fff; border: 1px solid #ebeef5; border-radius: 8px; padding: 16px; margin-bottom: 16px; box-shadow: 0 0 12px rgba(0,0,0,.035); }
+  .card h2 { font-size: 15px; margin-bottom: 12px; color: #303133; font-weight: 600; }
+  .card h3 { font-size: 13px; margin: 12px 0 8px; color: #606266; font-weight: 600; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .stat-card { background: #fff; border: 1px solid #ebeef5; border-radius: 8px; padding: 16px; text-align: center; box-shadow: 0 0 12px rgba(0,0,0,.035); }
+  .stat-card .num { font-size: 28px; font-weight: 700; color: #377dff; }
+  .stat-card .label { color: #909399; font-size: 12px; margin-top: 4px; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #ebeef5; font-size: 13px; }
+  th { background: #f5f7fa; color: #808093; font-weight: 600; }
+  tr:hover { background: #f5f7fa; }
+
+  input, textarea, select { background: #fff; border: 1px solid #dcdfe6; color: #606266; padding: 7px 10px; border-radius: 6px; font-size: 13px; font-family: inherit; width: 100%; }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: #409eff; }
+  textarea { font-family: monospace; min-height: 80px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .form-row-3 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .form-row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px; }
+  label { display: block; color: #606266; font-size: 12px; margin-bottom: 4px; }
+  .form-group { margin-bottom: 10px; }
+
+  button { background: #377dff; color: #fff; border: 1px solid #377dff; padding: 7px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; }
+  button:hover { background: #5a94ff; border-color: #5a94ff; }
+  button.danger { background: #f56c6c; border-color: #f56c6c; }
+  button.danger:hover { background: #e64545; border-color: #e64545; }
+  button.secondary { background: #fff; color: #606266; border-color: #dcdfe6; }
+  button.secondary:hover { background: #ecf5ff; color: #409eff; border-color: #c6e2ff; }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .actions { display: flex; gap: 8px; }
+  .section-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .section-title h2 { font-size: 16px; font-weight: 600; color: #303133; }
+
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .badge-success { background: #238636; color: #fff; }
+  .badge-failed { background: #da3633; color: #fff; }
+  .badge-pending { background: #3d444d; color: #c9d1d9; }
+  .badge-running { background: #1f6feb; color: #fff; }
+  .badge-stopped { background: #8b6914; color: #fff; }
+  .badge-available { background: #238636; color: #fff; }
+  .badge-used { background: #1f6feb; color: #fff; }
+  .badge-preauthorized { background: #8b6914; color: #fff; }
+  .badge-reachable { background: #238636; color: #fff; }
+  .badge-unreachable { background: #da3633; color: #fff; }
+
+  pre { background: #f8fafc; border: 1px solid #ebeef5; border-radius: 6px; padding: 12px; font-family: monospace; font-size: 12px; max-height: 300px; overflow: auto; white-space: pre-wrap; }
+
+  .hint { color: #909399; font-size: 12px; margin-top: 4px; }
+  .empty { text-align: center; padding: 40px; color: #909399; }
+
+  /* 指纹浏览器面板的特殊样式 */
+  .health-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .health-item { background: #f8fafc; border: 1px solid #ebeef5; border-radius: 6px; padding: 12px; }
+  .health-item .name { font-weight: 600; margin-bottom: 4px; }
+  .health-item .status { font-size: 12px; color: #909399; }
+  .driver-switch { display: flex; gap: 8px; margin-bottom: 16px; }
+  .driver-switch button { flex: 1; padding: 10px; background: #fff; border: 1px solid #dcdfe6; color: #606266; font-weight: 600; }
+  .driver-switch button.active { background: #377dff; border-color: #377dff; color: #fff; }
+  .driver-switch button:hover:not(.active) { background: #ecf5ff; color: #409eff; }
+  .driver-desc { color: #606266; font-size: 12px; padding: 8px 12px; background: #f8fafc; border-radius: 6px; margin-bottom: 16px; }
+
+  /* 统一邮箱导入 */
+  .import-source-bar { display: flex; align-items: center; gap: 6px; margin: 12px 0; padding: 8px 12px; background: #f8fafc; border: 1px solid #ebeef5; border-radius: 6px; }
+  .import-source-bar .source-label { font-size: 12px; color: #909399; margin-right: 4px; }
+  .import-source-bar .source-btn { padding: 4px 12px; background: #fff; border: 1px solid #dcdfe6; border-radius: 4px; color: #606266; font-size: 12px; cursor: pointer; }
+  .import-source-bar .source-btn.active { background: #377dff; border-color: #377dff; color: #fff; }
+  .import-source-bar .source-btn:hover:not(.active) { background: #ecf5ff; color: #409eff; }
+  .import-pane { margin: 8px 0; }
+  .import-pane textarea { width: 100%; min-height: 160px; font-family: 'Cascadia Code', Consolas, monospace; font-size: 12px; resize: vertical; }
+  .import-footer { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+  .import-result { font-size: 13px; color: #8ab4f8; }
+  .form-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+  .log-modal { position: fixed; inset: 0; z-index: 10; display: none; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,.62); }
+  .log-modal.open { display: flex; }
+  .log-modal-content { width: min(900px, 100%); max-height: min(80vh, 760px); display: flex; flex-direction: column; background: #fff; border: 1px solid #ebeef5; border-radius: 8px; box-shadow: 0 16px 48px rgba(0,0,0,.18); }
+  .log-modal-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #ebeef5; }
+  .log-modal-header h2 { margin: 0; font-size: 15px; }
+  .log-modal-body { margin: 0; min-height: 180px; max-height: 60vh; border: 0; border-radius: 0; overflow: auto; }
+  .log-live-label { color: #58a6ff; font-size: 12px; margin-left: 8px; }
+
+  /* 参考 turb 的注册工作台：工具栏、数字步进器和任务表格。 */
+  .register-panel-v2, .jobs-panel-v2 { background: #fff; border: 1px solid #ebeef5; border-radius: 10px; box-shadow: 0 0 12px rgba(0,0,0,.04); overflow: hidden; }
+  .register-toolbar-v2, .jobs-toolbar-v2 { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 16px; }
+  .register-toolbar-v2 { border-bottom: 1px solid #ebeef5; }
+  .register-title-v2 { margin-right: auto; color: #303133; font-size: 16px; font-weight: 600; }
+  .jobs-tb-field { display: inline-flex; align-items: center; gap: 8px; color: #606266; font-size: 14px; white-space: nowrap; margin: 0; }
+  .el-input-number { position: relative; display: inline-flex; width: 138px; height: 40px; border: 1px solid #dcdfe6; border-radius: 6px; background: #fff; overflow: hidden; vertical-align: middle; }
+  .el-input-number:hover, .el-input-number:focus-within { border-color: #409eff; }
+  .el-input-number input { flex: 1; width: 100%; min-width: 0; height: 100%; margin: 0; border: 0; outline: 0; background: transparent; padding: 0 42px 0 12px; text-align: center; color: #606266; font-size: 14px; appearance: textfield; }
+  .el-input-number input::-webkit-outer-spin-button, .el-input-number input::-webkit-inner-spin-button { appearance: none; margin: 0; }
+  .el-input-number__increase, .el-input-number__decrease { position: absolute; right: 0; width: 32px; height: 20px; padding: 0; border: 0; border-left: 1px solid #dcdfe6; border-radius: 0; background: #f5f7fa; color: #606266; display: inline-flex; align-items: center; justify-content: center; }
+  .el-input-number__increase { top: 0; border-bottom: 1px solid #dcdfe6; }
+  .el-input-number__decrease { bottom: 0; }
+  .el-input-number__increase:hover, .el-input-number__decrease:hover { background: #ecf5ff; border-color: #dcdfe6; color: #409eff; }
+  .el-input-number__increase svg, .el-input-number__decrease svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .jobs-tb-btn { min-height: 40px; border: 1px solid #dcdfe6; border-radius: 6px; background: #fff; color: #606266; padding: 8px 18px; font: inherit; font-size: 14px; font-weight: 400; cursor: pointer; display: inline-flex; align-items: center; white-space: nowrap; line-height: 1; }
+  .jobs-tb-btn:hover:not(:disabled) { color: #409eff; border-color: #c6e2ff; background: #ecf5ff; }
+  .jobs-tb-btn--primary { color: #fff; background: #377dff; border-color: #377dff; }
+  .jobs-tb-btn--primary:hover:not(:disabled) { color: #fff; background: #5a94ff; border-color: #5a94ff; }
+  .jobs-tb-btn--danger { color: #e64545; background: #ffe0e0; border-color: #f89898; }
+  .jobs-tb-btn--danger:hover:not(:disabled) { color: #fff; background: #e64545; border-color: #e64545; }
+  .register-settings-v2 { display: grid; grid-template-columns: minmax(180px, .6fr) minmax(280px, 1.4fr); gap: 12px; padding: 16px; background: #fafbfc; }
+  .register-settings-v2 .form-group { margin: 0; }
+  .register-settings-v2 select, .register-settings-v2 input { height: 40px; }
+  .register-settings-v2 .invite-input { display: flex; gap: 8px; }
+  .register-note-v2 { padding: 0 16px 16px; color: #909399; font-size: 12px; }
+  .jobs-panel-v2 { overflow-x: auto; }
+  .register-jobs-v2 { margin-top: 20px; }
+  .jobs-panel-v2 .section-title { padding: 16px 16px 0; margin: 0; }
+  .jobs-panel-v2 table { min-width: 980px; }
+  .jobs-panel-v2 th, .jobs-panel-v2 td { padding: 12px; vertical-align: middle; }
+  .jobs-panel-v2 tbody tr:hover { background: #f5f7fa; }
+  .jobs-panel-v2 input[type="checkbox"] { width: 16px; height: 16px; accent-color: #377dff; }
+  .account-copy { min-height: 28px; margin-left: 8px; padding: 3px 8px; font-size: 12px; vertical-align: middle; }
+  @media (max-width: 760px) {
+    main { padding: 14px; }
+    .register-title-v2 { width: 100%; }
+    .register-settings-v2 { grid-template-columns: 1fr; }
+    .jobs-tb-field { width: 100%; justify-content: space-between; }
+    .el-input-number { width: min(180px, 55vw); }
+    .jobs-tb-btn--primary { flex: 1; justify-content: center; }
+  }
+
+  /* 左侧导航 + 右侧工作区布局，参考 turb 注册机控制台。 */
+  .app-shell { min-height: 100vh; }
+  .sidebar { position: fixed; z-index: 5; inset: 0 auto 0 0; display: flex; flex-direction: column; width: 224px; background: #fff; border-right: 1px solid #ebeef5; }
+  .brand { display: flex; align-items: center; gap: 11px; height: 64px; padding: 0 16px; border-bottom: 1px solid #ebeef5; color: #1f2937; font-size: 16px; font-weight: 700; }
+  .brand-mark { display: inline-flex; align-items: center; justify-content: center; width: 25px; height: 25px; border-radius: 7px; background: #4f5df5; color: #fff; font-size: 13px; font-weight: 800; }
+  .sidebar .tabs { display: flex; flex: 0 0 auto; flex-direction: column; gap: 4px; margin: 10px 8px; border: 0; overflow: visible; }
+  .sidebar .tab { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 40px; padding: 0 12px; border: 0; border-radius: 8px; background: transparent; color: #475569; text-align: left; font-size: 14px; font-weight: 600; line-height: 1; }
+  .sidebar .tab span { display: inline-flex; width: 16px; justify-content: center; color: #64748b; font-size: 17px; font-weight: 400; }
+  .sidebar .tab:hover { border: 0; background: #f5f7ff; color: #377dff; }
+  .sidebar .tab.active { border: 0; background: #eaf0ff; color: #3f64f4; }
+  .sidebar .tab.active span { color: #3f64f4; }
+  .sidebar-footer { margin-top: auto; padding: 18px 16px; border-top: 1px solid #ebeef5; color: #94a3b8; font-size: 12px; }
+  .app-main { min-height: 100vh; margin-left: 224px; padding: 20px 28px 36px; }
+  .content-header { display: flex; align-items: center; justify-content: space-between; min-height: 28px; margin-bottom: 14px; }
+  .content-header h1 { margin: 0; color: #1f2937; font-size: 22px; font-weight: 700; }
+  #status { color: #909399; font-size: 13px; }
+  .app-main > .stats { grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .app-main > .panel { max-width: 100%; }
+  @media (max-width: 900px) {
+    .sidebar { position: static; width: 100%; min-height: auto; border-right: 0; border-bottom: 1px solid #ebeef5; }
+    .brand { height: 56px; }
+    .sidebar .tabs { flex-direction: row; overflow-x: auto; margin: 8px; }
+    .sidebar .tab { flex: 0 0 auto; width: auto; }
+    .sidebar-footer { display: none; }
+    .app-main { margin-left: 0; padding: 16px; }
+    .app-main > .stats { grid-template-columns: repeat(2, minmax(130px, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar" aria-label="主导航">
+    <div class="brand"><span class="brand-mark">M</span><span>Muse Register</span></div>
+    <nav class="tabs" aria-label="功能导航">
+      <button type="button" class="tab active" data-tab="dashboard"><span aria-hidden="true">+</span> 注册</button>
+      <button type="button" class="tab" data-tab="accounts"><span aria-hidden="true">&#9787;</span> 账号</button>
+      <button type="button" class="tab" data-tab="emails"><span aria-hidden="true">&#9993;</span> 邮箱池</button>
+      <button type="button" class="tab" data-tab="cards"><span aria-hidden="true">&#9645;</span> 卡池（可选）</button>
+      <button type="button" class="tab" data-tab="proxies"><span aria-hidden="true">&#9678;</span> 代理池</button>
+      <button type="button" class="tab" data-tab="fingerprint"><span aria-hidden="true">&#9635;</span> 指纹浏览器</button>
+      <button type="button" class="tab" data-tab="config"><span aria-hidden="true">&#9881;</span> 配置</button>
+    </nav>
+    <div class="sidebar-footer">Muse by Meta 本地控制台</div>
+  </aside>
+
+  <main class="app-main">
+    <header class="content-header">
+      <h1 id="page-title">注册机</h1>
+      <div id="status">就绪</div>
+    </header>
+    <div class="stats" id="stats-bar"></div>
+
+  <!-- ========== 注册面板 ========== -->
+  <div class="panel active" id="panel-dashboard">
+    <section class="register-panel-v2" aria-label="批量注册">
+      <div class="register-toolbar-v2">
+        <h2 class="register-title-v2">批量注册 Muse 账号</h2>
+        <label class="jobs-tb-field">注册数量
+          <span class="el-input-number">
+            <input type="number" id="reg-count" value="1" min="1" max="200" inputmode="numeric">
+            <button type="button" class="el-input-number__increase" data-step-for="reg-count" data-step="1" aria-label="增加注册数量" title="增加">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 14 12 8 18 14"/></svg>
+            </button>
+            <button type="button" class="el-input-number__decrease" data-step-for="reg-count" data-step="-1" aria-label="减少注册数量" title="减少">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 10 12 16 18 10"/></svg>
+            </button>
+          </span>
+        </label>
+        <label class="jobs-tb-field">注册线程
+          <span class="el-input-number">
+            <input type="number" id="reg-workers" value="3" min="1" max="16" inputmode="numeric">
+            <button type="button" class="el-input-number__increase" data-step-for="reg-workers" data-step="1" aria-label="增加注册线程" title="增加">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 14 12 8 18 14"/></svg>
+            </button>
+            <button type="button" class="el-input-number__decrease" data-step-for="reg-workers" data-step="-1" aria-label="减少注册线程" title="减少">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 10 12 16 18 10"/></svg>
+            </button>
+          </span>
+        </label>
+        <button class="jobs-tb-btn jobs-tb-btn--primary" id="btn-register">开始注册</button>
+      </div>
+      <div class="register-settings-v2">
+        <div class="form-group">
+          <label for="reg-source">邮箱来源</label>
+          <select id="reg-source">
+            <option value="outlook" selected>Outlook (需 Mailnest API)</option>
+            <option value="generic_api">Generic API 取码</option>
+            <option value="imap">IMAP 邮箱</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="reg-invite">邀请码（可选）</label>
+          <div class="invite-input">
+            <input type="text" id="reg-invite" placeholder="6 位邀请码，注册后自动兑换">
+            <button class="secondary" id="btn-save-reg-invite" style="white-space:nowrap;">保存</button>
+          </div>
+        </div>
+      </div>
+      <div class="register-note-v2">当前浏览器驱动：<strong id="driver-info" style="color:#377dff">RoxyBrowser</strong>。可在“指纹浏览器”中调整驱动和连接配置。</div>
+    </section>
+
+    <section class="jobs-panel-v2 register-jobs-v2" aria-label="注册任务">
+      <div class="section-title"><h2>注册任务</h2><div class="actions"><button class="jobs-tb-btn" id="btn-refresh-jobs">刷新</button><button class="jobs-tb-btn jobs-tb-btn--danger" id="btn-delete-selected">删除所选</button></div></div>
+      <table id="jobs-table">
+        <thead><tr><th style="width:36px"><input id="jobs-select-all" type="checkbox" aria-label="全选任务"></th><th>ID</th><th>状态</th><th>邮箱</th><th>Account</th><th>Driver</th><th>开始</th><th>完成</th><th>错误</th><th>操作</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- ========== 指纹浏览器面板 (新增) ========== -->
+  <div class="panel" id="panel-fingerprint">
+    <div class="card">
+      <h2>浏览器驱动选择</h2>
+
+      <div id="fp-health" class="health-grid">
+        <div class="health-item" id="fp-health-roxy">检测中...</div>
+      </div>
+      <div style="margin-top: 8px; display: flex; gap: 8px;">
+        <button class="secondary" id="btn-fp-health">🔄 重新检测</button>
+        <button class="secondary" id="btn-open-roxy">🌐 打开 RoxyBrowser</button>
+      </div>
+
+      <h3>选择驱动</h3>
+      <div class="driver-switch">
+        <button data-driver="roxy">RoxyBrowser</button>
+        <button data-driver="local">本地浏览器</button>
+      </div>
+      <div id="fp-driver-desc" class="driver-desc"></div>
+    </div>
+
+    <!-- RoxyBrowser 配置 -->
+    <div class="card" id="fp-roxy-config">
+      <h2>RoxyBrowser 配置</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>API Base</label>
+          <input type="text" id="roxy-api-base" placeholder="http://127.0.0.1:50100">
+        </div>
+        <div class="form-group">
+          <label>API Token</label>
+          <input type="text" id="roxy-api-token" placeholder="留空则免 token">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Profile ID (留空则自动创建)</label>
+          <input type="text" id="roxy-profile-id" placeholder="">
+        </div>
+        <div class="form-group">
+          <label>Workspace ID（自动获取）</label>
+          <input type="text" id="roxy-workspace-id" placeholder="保存后根据 API Token 自动获取" readonly>
+        </div>
+      </div>
+      <div class="form-row-4">
+        <div class="form-group">
+          <label>无头启动</label>
+          <select id="roxy-headless"><option value="0">否 (显示窗口)</option><option value="1">是</option></select>
+        </div>
+        <div class="form-group">
+          <label>一号一环境</label>
+          <select id="roxy-one-per-account"><option value="1">是 (推荐)</option><option value="0">否</option></select>
+        </div>
+        <div class="form-group">
+          <label>用完删除 Profile</label>
+          <select id="roxy-delete-after"><option value="1">是 (推荐)</option><option value="0">否</option></select>
+        </div>
+        <div class="form-group">
+          <label>使用代理池</label>
+          <select id="roxy-use-proxy-pool"><option value="1">是</option><option value="0" selected>否</option></select>
+        </div>
+      </div>
+      <button id="btn-save-roxy">💾 保存 Roxy 配置</button>
+      <div class="hint">需要先启动 RoxyBrowser 本地客户端 (http://127.0.0.1:50100) 并获取 API Token</div>
+    </div>
+
+    <div class="card" id="fp-local-config" style="display:none;">
+      <h2>本地浏览器配置</h2>
+      <div class="hint">使用本机 Chrome 浏览器打开注册页面，不注入项目代理池或指纹配置；会沿用系统网络设置。请保持浏览器窗口可操作。</div>
+    </div>
+
+  </div>
+
+  <!-- ========== 账号 ========== -->
+  <div class="panel" id="panel-accounts">
+    <div class="card">
+      <h2>已注册账号</h2>
+      <table id="accounts-table">
+        <thead><tr><th>ID</th><th>邮箱</th><th>Token</th><th>邀请码</th><th>来源</th><th>Driver</th><th>代理</th><th>创建时间</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ========== 邮箱池 ========== -->
+  <div class="panel" id="panel-emails">
+    <div class="card">
+      <div class="section-title">
+        <h2>邮箱池 · 统一导入</h2>
+        <div class="actions">
+          <button class="secondary" id="btn-refresh-emails">刷新</button>
+        </div>
+      </div>
+
+      <div class="import-source-bar">
+        <span class="source-label">来源:</span>
+        <button class="source-btn active" data-source="outlook">🅾️ Outlook</button>
+        <button class="source-btn" data-source="generic_api">🔌 Generic API</button>
+        <button class="source-btn" data-source="imap">📥 IMAP</button>
+        <span id="import-source-hint" class="source-hint" style="margin-left:auto;color:#8ab4f8;">当前: Outlook (外购账号池, mail.chatai.codes 远端取信)</span>
+      </div>
+
+      <div id="import-outlook" class="import-pane">
+        <div class="hint">4 段格式 email----password----clientId----refreshToken；分隔符也可用 ====；每行一个，# 注释跳过</div>
+        <textarea id="import-textarea" rows="6" placeholder="user1@outlook.com----pass123----clientabc----refreshxyz&#10;user2@outlook.com----pass456----clientdef----refreshuvw"></textarea>
+      </div>
+
+      <div id="import-generic_api" class="import-pane" style="display:none;">
+        <div class="hint">2 段格式: email----取码地址 (本地自建 API / yangyang / mailnest)</div>
+        <textarea id="import-textarea" rows="6" placeholder="user@gmail.com----http://127.0.0.1:8765/code?e=user%40gmail.com"></textarea>
+      </div>
+
+      <div id="import-imap" class="import-pane" style="display:none;">
+        <div class="hint">每行: email----IMAP密码；下方统一填服务器 (可后续补)</div>
+        <div class="form-row-3">
+          <div class="form-group"><label>IMAP 服务器</label><input type="text" id="import-imap-server" placeholder="imap.qq.com"></div>
+          <div class="form-group"><label>端口</label><input type="number" id="import-imap-port" value="993"></div>
+          <div class="form-group"><label>SSL</label>
+            <select id="import-imap-ssl">
+              <option value="1">是 (SSL/TLS)</option>
+              <option value="0">否 (STARTTLS)</option>
+            </select>
+          </div>
+        </div>
+        <textarea id="import-textarea" rows="6" placeholder="123456@qq.com----your_16digit_auth_code"></textarea>
+      </div>
+
+      <div class="import-footer">
+        <input type="file" id="import-file" accept=".txt,.csv,.log,.json" style="display:none;">
+        <button class="secondary" id="btn-import-file">📂 从文件</button>
+        <button id="btn-import-now">📥 立即导入</button>
+        <span id="import-result" class="import-result"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">
+        <h2>邮箱列表</h2>
+        <span id="emails-stats" style="color:#9aa0a6;font-size:12px;"></span>
+      </div>
+      <table id="emails-table">
+        <thead><tr><th>邮箱</th><th>来源</th><th>状态</th><th>更新时间</th><th>操作</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ========== 银行卡池 ========== -->
+  <div class="panel" id="panel-cards">
+    <div class="card">
+      <div class="section-title"><h2>卡池（可选） (AES 加密)</h2><button class="secondary" id="btn-refresh-cards">刷新</button></div>
+      <div class="form-row-4">
+        <div class="form-group"><label>卡号</label><input type="text" id="card-number"></div>
+        <div class="form-group"><label>有效期</label><input type="text" id="card-expiry" placeholder="12/27"></div>
+        <div class="form-group"><label>CVV</label><input type="text" id="card-cvv"></div>
+        <div class="form-group"><label>邮编</label><input type="text" id="card-zip" placeholder="10001"></div>
+      </div>
+      <div class="form-row-4">
+        <div class="form-group"><label>国家</label><input type="text" id="card-country" value="US"></div>
+        <div class="form-group"><label>备注</label><input type="text" id="card-note"></div>
+        <div class="form-group"><label>&nbsp;</label><button id="btn-add-card">＋ 添加</button></div>
+      </div>
+      <div style="margin-top:16px; padding-top:14px; border-top:1px solid #30363d;">
+        <label for="card-bulk-text">批量粘贴银行卡信息</label>
+        <textarea id="card-bulk-text" rows="5" autocomplete="off" spellcheck="false" placeholder="每行一张：卡号----MM/YY----CVV----邮编----国家----备注&#10;4111 1111 1111 1111----07/30----123----44138----US----测试卡&#10;也支持：卡号 | MM/YY | CVV | 持卡人 | 邮编 | 国家 | 备注"></textarea>
+        <div class="hint">支持 <code>----</code>、<code>|</code>、逗号或 Tab 分隔；持卡人和备注可省略。导入后卡号与 CVV 仍会加密保存。</div>
+        <div style="margin-top:10px;"><button id="btn-import-cards">📥 识别并添加到卡池</button><span id="card-import-result" class="import-result"></span></div>
+      </div>
+    </div>
+    <div class="card">
+      <table id="cards-table">
+        <thead><tr><th>ID</th><th>卡号</th><th>有效期</th><th>邮编</th><th>国家</th><th>状态</th><th>操作</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ========== 代理池 ========== -->
+  <div class="panel" id="panel-proxies">
+    <div class="card">
+      <h2>代理池 (每行一个)</h2>
+      <textarea id="proxy-pool" rows="8" placeholder="socks5h://user:pass@us-proxy-1:1080&#10;socks5h://user:pass@us-proxy-2:1080"></textarea>
+      <div class="hint">出口必须美国/加拿大。协议: socks5h:// (推荐, DNS 在代理端解析) 或 http://</div>
+      <div style="margin-top: 12px;">
+        <label>提取式代理 API (池子为空时自动调 API 拉取, cliproxy 白名单 API)</label>
+        <input type="text" id="proxy-extract-api" placeholder="示例：https://api.example.com/proxy?region=US&num=5&time=10&format=n&type=txt">
+        <div class="hint">返回 host:port:user:pass / host:port 均可, 自动按 time=N 缓存会话</div>
+      </div>
+      <div style="margin-top: 10px; display: flex; gap: 8px;">
+        <button id="btn-save-proxies">💾 保存</button>
+        <button class="secondary" id="btn-get-proxy">🌐 获取代理</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 配置 ========== -->
+  <div class="panel" id="panel-config">
+    <div class="card">
+      <h2>全局配置</h2>
+      <div class="form-row">
+        <div class="form-group"><label>邀请码</label><input type="text" id="cfg-invite"></div>
+        <div class="form-group"><label>OTP 超时 (秒)</label><input type="number" id="cfg-otp-timeout" value="180"></div>
+      </div>
+      <button id="btn-save-config">💾 保存</button>
+    </div>
+  </div>
+</main>
+</div>
+
+<div id="job-log-modal" class="log-modal" role="dialog" aria-modal="true" aria-labelledby="job-log-title">
+  <div class="log-modal-content">
+    <div class="log-modal-header">
+      <h2 id="job-log-title">任务日志 <span id="job-log-live" class="log-live-label"></span></h2>
+      <button class="secondary" id="btn-close-job-log">关闭</button>
+    </div>
+    <pre id="job-log-content" class="log-modal-body">正在加载日志…</pre>
+  </div>
+</div>
+
+<script>
+// ======= 全局配置 =======
+const state = { driver: 'roxy', config: {} };
+const DRIVER_DESCS = {
+  roxy: '🎭 RoxyBrowser 本地指纹浏览器 (HTTP API http://127.0.0.1:50100)。需先启动 Roxy 客户端并获取 API Token。推荐用于需要银行卡 Stripe/3DS 的场景。',
+  local: '🌐 本地浏览器：使用本机 Chrome 直连注册，不使用代理池和指纹浏览器。',
+};
+
+// ======= Tab 切换 =======
+const PAGE_TITLES = {
+  dashboard: '注册机',
+  accounts: '账号',
+  emails: '邮箱池',
+  cards: '卡池（可选）',
+  proxies: '代理池',
+  fingerprint: '指纹浏览器',
+  config: '配置',
+};
+function updateStatsVisibility(tabName) {
+  document.getElementById('stats-bar').style.display = ['dashboard', 'accounts'].includes(tabName) ? '' : 'none';
+}
+document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  tab.classList.add('active');
+  document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+  document.getElementById('page-title').textContent = PAGE_TITLES[tab.dataset.tab] || 'Muse Register';
+  updateStatsVisibility(tab.dataset.tab);
+}));
+
+// ======= API 工具 =======
+async function api(path, opts = {}) {
+  opts.headers = opts.headers || {};
+  if (opts.json) { opts.headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(opts.json); }
+  // 超时保护: 默认 120s, 防止 fetch 永久挂起
+  const timeoutMs = opts.timeout || 120000;
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  opts.signal = ctrl.signal;
+  try {
+    const resp = await fetch(path, opts);
+    const text = await resp.text();
+    try { return JSON.parse(text); } catch { return text; }
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// ======= Driver 切换 =======
+document.querySelectorAll('.driver-switch button').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const driver = btn.dataset.driver;
+    state.driver = driver;
+    document.querySelectorAll('.driver-switch button').forEach(b => b.classList.toggle('active', b === btn));
+    document.getElementById('fp-driver-desc').textContent = DRIVER_DESCS[driver] || '';
+    // 写入 config
+    await api('/api/config', {
+      method: 'POST',
+      json: { registration_driver: driver },
+    });
+    updateDriverInfo();
+  });
+});
+
+function updateDriverInfo() {
+  const name = ['roxy', 'local'].includes(state.driver) ? state.driver : 'roxy';
+  state.driver = name;
+  const pretty = { roxy: 'RoxyBrowser', local: '本地浏览器' }[name] || 'RoxyBrowser';
+  document.getElementById('driver-info').textContent = pretty;
+  document.getElementById('fp-driver-desc').textContent = DRIVER_DESCS[name] || '';
+  document.querySelectorAll('.driver-switch button').forEach(b => b.classList.toggle('active', b.dataset.driver === name));
+  document.getElementById('fp-roxy-config').style.display = name === 'roxy' ? '' : 'none';
+  document.getElementById('fp-local-config').style.display = name === 'local' ? '' : 'none';
+}
+
+async function loadFingerprintHealth() {
+  try {
+    const h = await api('/api/fingerprint/health');
+    state.config.fingerprint = h;
+    const roxy = document.getElementById('fp-health-roxy');
+    if (h.roxy.reachable) {
+      roxy.innerHTML = `<div class="name">🎭 RoxyBrowser</div><div class="badge badge-reachable">可达 (${h.roxy.status})</div> <div class="status">${h.roxy.base}</div>`;
+    } else {
+      roxy.innerHTML = `<div class="name">🎭 RoxyBrowser</div><div class="badge badge-unreachable">不可用</div> <div class="status">${h.roxy.error || ''}</div>`;
+    }
+    updateDriverInfo();
+  } catch (e) {
+    document.getElementById('fp-health-roxy').textContent = '检测失败: ' + e;
+  }
+}
+
+// ======= 配置加载/保存 =======
+async function loadConfig() {
+  const c = await api('/api/config');
+  state.config = c;
+  state.driver = ['roxy', 'local'].includes(c.registration_driver) ? c.registration_driver : 'roxy';
+  updateDriverInfo();
+  // Roxy
+  document.getElementById('roxy-api-base').value = c.roxy_api_base || '';
+  document.getElementById('roxy-api-token').value = c.roxy_api_token || '';
+  document.getElementById('roxy-profile-id').value = c.roxy_profile_id || '';
+  document.getElementById('roxy-workspace-id').value = c.roxy_workspace_id || '';
+  document.getElementById('roxy-headless').value = c.roxy_open_headless ? '1' : '0';
+  document.getElementById('roxy-one-per-account').value = c.roxy_one_profile_per_account ? '1' : '0';
+  document.getElementById('roxy-delete-after').value = c.roxy_delete_profile_after_run ? '1' : '0';
+  document.getElementById('roxy-use-proxy-pool').value = c.roxy_create_use_proxy_pool ? '1' : '0';
+  // 通用
+  document.getElementById('cfg-invite').value = c.invite_code || '';
+  document.getElementById('reg-invite').value = c.invite_code || '';
+  document.getElementById('cfg-otp-timeout').value = c.otp_max_wait || 180;
+  // 代理池
+  document.getElementById('proxy-pool').value = (c.proxy_pool || []).join('\n');
+  const extApiEl = document.getElementById('proxy-extract-api');
+  if (extApiEl) extApiEl.value = c.proxy_extract_api || '';
+}
+
+async function saveRoxyConfig() {
+  const r = await api('/api/config', {
+    method: 'POST',
+    json: {
+      roxy_api_base: document.getElementById('roxy-api-base').value.trim(),
+      roxy_api_token: document.getElementById('roxy-api-token').value.trim(),
+      roxy_profile_id: document.getElementById('roxy-profile-id').value.trim(),
+      roxy_auto_workspace: true,
+      roxy_open_headless: document.getElementById('roxy-headless').value === '1',
+      roxy_one_profile_per_account: document.getElementById('roxy-one-per-account').value === '1',
+      roxy_delete_profile_after_run: document.getElementById('roxy-delete-after').value === '1',
+      roxy_create_use_proxy_pool: document.getElementById('roxy-use-proxy-pool').value === '1',
+    },
+  });
+  const selected = r.workspace?.id ? ` · 已自动选择工作区 ${r.workspace.id}` : '';
+  if (!r.ok) { alert('❌ ' + (r.error || '保存失败')); return; }
+  if (r.workspace?.id) document.getElementById('roxy-workspace-id').value = r.workspace.id;
+  alert('✅ Roxy 配置已保存' + selected);
+}
+
+// ======= 统计 =======
+async function loadStats() {
+  const [accts, emails, jobs] = await Promise.all([
+    api('/api/accounts?limit=1').then(r => r.total || 0).catch(() => 0),
+    api('/api/emails').then(r => r.items?.length || 0).catch(() => 0),
+    api('/api/jobs?limit=100').then(r => r.items || []).catch(() => []),
+  ]);
+  const counts = {};
+  jobs.forEach(j => counts[j.status] = (counts[j.status] || 0) + 1);
+  document.getElementById('stats-bar').innerHTML = `
+    <div class="stat-card"><div class="num">${accts}</div><div class="label">已注册账号</div></div>
+    <div class="stat-card"><div class="num" style="color:#409eff">${emails}</div><div class="label">邮箱总数</div></div>
+    <div class="stat-card"><div class="num" style="color:#1f6feb">${counts.running||0}</div><div class="label">进行中</div></div>
+    <div class="stat-card"><div class="num" style="color:#238636">${counts.success||0}</div><div class="label">成功</div></div>
+    <div class="stat-card"><div class="num" style="color:#da3633">${counts.failed||0}</div><div class="label">失败</div></div>
+  `;
+}
+
+// ======= 账号/邮箱/银行卡/代理/任务 =======
+async function loadAccounts() {
+  const r = await api('/api/accounts?limit=200');
+  const tb = document.querySelector('#accounts-table tbody');
+  if (!r.items?.length) { tb.innerHTML = '<tr><td colspan="8" class="empty">暂无</td></tr>'; return; }
+  tb.innerHTML = r.items.map(a => `
+    <tr><td>${a.id}</td><td>${a.email}<button type="button" class="secondary account-copy" data-copy-email="${a.email}" title="复制邮箱">复制</button></td><td>${(a.access_token||'').substring(0,32)}${a.access_token?'...':''}</td>
+    <td>${a.invite_code||'-'}</td><td>${a.email_source||'-'}</td>
+    <td>${(a.payload||'').includes('driver=roxy')?'Roxy':(a.payload||'').includes('driver=local')?'本地':(a.payload||'').includes('driver=cloak')?'Cloak':'Protocol'}</td>
+    <td title="${a.proxy_used||''}">${a.proxy_used?a.proxy_used.substring(0,36)+'...':'-'}</td>
+    <td>${a.created_at||'-'}</td></tr>
+  `).join('');
+  tb.querySelectorAll('[data-copy-email]').forEach(button => {
+    button.addEventListener('click', () => copyAccountEmail(button));
+  });
+}
+
+async function copyAccountEmail(button) {
+  const email = String(button.dataset.copyEmail || '').trim();
+  if (!email) return;
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(email);
+    } else {
+      const input = document.createElement('textarea');
+      input.value = email;
+      input.style.position = 'fixed';
+      input.style.opacity = '0';
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      input.remove();
+    }
+    const original = button.textContent;
+    button.textContent = '已复制';
+    setTimeout(() => { button.textContent = original; }, 1200);
+  } catch (error) {
+    alert('复制失败，请手动复制邮箱');
+  }
+}
+
+const STATUS_LABELS = { available:'可用', using:'注册中', used:'已用', disabled:'停用' };
+const STATUS_BADGES  = { available:'available', using:'running', used:'used', disabled:'failed' };
+
+async function loadEmails() {
+  const tb = document.querySelector('#emails-table tbody');
+  const statsEl = document.getElementById('emails-stats');
+  try {
+    const r = await api('/api/emails?source=all');
+    const rows = r.items || [];
+    const st = r.stats || {};
+    if (statsEl) {
+      statsEl.textContent =
+        `可用 ${st.available||0} · 注册中 ${st.using||0} · 已用 ${st.used||0} · 停用 ${st.disabled||0} · 共 ${rows.length}`;
+    }
+    if (!rows.length) { tb.innerHTML = '<tr><td colspan="5" class="empty">暂无邮箱素材 — 请先在上方导入</td></tr>'; return; }
+    tb.innerHTML = rows.map(e => {
+      const label = STATUS_LABELS[e.status] || e.status;
+      const badge = STATUS_BADGES[e.status] || 'pending';
+      const isDisabled = e.status === 'disabled';
+      const toggleBtn = isDisabled
+        ? `<button class="secondary" onclick="setEmailStatus('${e.email}','${e.source}','available')">启用</button>`
+        : `<button class="secondary" onclick="setEmailStatus('${e.email}','${e.source}','disabled')">停用</button>`;
+      return `<tr>
+        <td>${e.email}</td>
+        <td>${e.source}</td>
+        <td><span class="badge badge-${badge}">${label}</span></td>
+        <td>${e.updated_at||'-'}</td>
+        <td>${toggleBtn} <button class="danger" onclick="deleteEmail('${e.email}','${e.source}')">删</button></td>
+      </tr>`;
+    }).join('');
+  } catch(e) { tb.innerHTML = '<tr><td colspan="5" class="empty">加载失败: '+e+'</td></tr>'; }
+}
+
+async function setEmailStatus(email, src, status) {
+  const label = STATUS_LABELS[status] || status;
+  if (status === 'disabled' && !confirm(`停用 ${email}？停用后不会再用于注册。`)) return;
+  try {
+    const r = await api(`/api/emails/${encodeURIComponent(email)}/status`, {
+      method: 'POST', json: { status, source: src }, timeout: 15000,
+    });
+    if (!r.ok) alert('❌ ' + (r.error || '操作失败'));
+  } catch (err) {
+    alert('❌ ' + ((err && err.message) || '网络错误'));
+  }
+  loadEmails();
+}
+
+async function deleteEmail(email, src) {
+  if (!confirm('删除 '+email+' ?')) return;
+  await api('/api/emails/'+encodeURIComponent(email)+'?source='+src, { method: 'DELETE' });
+  loadEmails();
+}
+
+async function loadCards() {
+  const r = await api('/api/cards');
+  const tb = document.querySelector('#cards-table tbody');
+  if (!r.items?.length) { tb.innerHTML = '<tr><td colspan="7" class="empty">暂无</td></tr>'; return; }
+  tb.innerHTML = r.items.map(c => {
+    const badge = c.status==='available'?'available':c.status==='preauthorized'?'preauthorized':'running';
+    return `<tr><td>${c.id}</td><td>${c.card_masked||'(加密)'}</td><td>${c.expiry}</td><td>${c.billing_zip||'-'}</td>
+      <td>${c.billing_country||'-'}</td><td><span class="badge badge-${badge}">${c.status}</span></td>
+      <td><button class="danger" onclick="deleteCard(${c.id})">删</button></td></tr>`;
+  }).join('');
+}
+
+async function deleteCard(id) {
+  if (!confirm('删除 #'+id+' ?')) return;
+  await api('/api/cards/'+id, { method: 'DELETE' }); loadCards();
+}
+
+const selectedJobIds = new Set();
+
+async function loadJobs() {
+  const r = await api('/api/jobs?limit=100');
+  const tb = document.querySelector('#jobs-table tbody');
+  if (!r.items?.length) { tb.innerHTML = '<tr><td colspan="10" class="empty">暂无任务</td></tr>'; return; }
+  const visibleIds = r.items.map(j => String(j.id));
+  [...selectedJobIds].forEach(id => { if (!visibleIds.includes(id)) selectedJobIds.delete(id); });
+  tb.innerHTML = r.items.map(j => {
+    const badge = j.status==='success'?'success':j.status==='failed'?'failed':j.status==='running'?'running':j.status==='stopped'||j.status==='stopping'?'stopped':'pending';
+    const actions = j.status==='running'
+      ? `<button class="secondary" onclick="showLog(${j.id}, true)">👁 查看日志</button> <button class="secondary" onclick="stopJob(${j.id})">停止</button>`
+      : j.status==='pending'
+        ? `<button class="secondary" onclick="stopJob(${j.id})">取消</button>`
+        : `<button class="secondary" onclick="showLog(${j.id})">📋 日志</button> <button class="danger" onclick="deleteJob(${j.id})">删除</button>`;
+    const completion = j.status === 'failed'
+      ? '<span class="badge badge-failed">失败</span>'
+      : j.status === 'success'
+        ? '<span class="badge badge-success">成功</span>'
+        : j.status === 'stopped' || j.status === 'cancelled'
+          ? '<span class="badge badge-stopped">已停止</span>'
+          : j.completed_at || '-';
+    const driver = (j.payload||'').includes('driver=') ? (j.payload||'').match(/driver=(\w+)/)?.[1] || '-' : '-';
+    return `<tr><td><input class="job-select" type="checkbox" data-job-id="${j.id}" aria-label="选择任务 #${j.id}" ${selectedJobIds.has(String(j.id)) ? 'checked' : ''}></td><td>${j.id}</td><td><span class="badge badge-${badge}">${j.status}</span></td><td>${j.email||'-'}</td>
+      <td>${j.account_id||'-'}</td><td>${driver}</td><td>${j.started_at||'-'}</td><td>${completion}</td>
+      <td title="${(j.error||'').replace(/"/g,'&quot;')}">${(j.error||'-').substring(0,40)}</td><td>${actions}</td></tr>`;
+  }).join('');
+
+  const selectAll = document.getElementById('jobs-select-all');
+  const selectedVisible = visibleIds.filter(id => selectedJobIds.has(id));
+  selectAll.checked = selectedVisible.length === visibleIds.length;
+  selectAll.indeterminate = selectedVisible.length > 0 && selectedVisible.length < visibleIds.length;
+  selectAll.onchange = () => {
+    visibleIds.forEach(id => selectAll.checked ? selectedJobIds.add(id) : selectedJobIds.delete(id));
+    loadJobs();
+  };
+  tb.querySelectorAll('.job-select').forEach(box => {
+    box.addEventListener('change', () => {
+      const id = box.dataset.jobId;
+      box.checked ? selectedJobIds.add(id) : selectedJobIds.delete(id);
+      selectAll.checked = visibleIds.every(item => selectedJobIds.has(item));
+      selectAll.indeterminate = !selectAll.checked && visibleIds.some(item => selectedJobIds.has(item));
+    });
+  });
+}
+
+async function stopJob(id) { await api(`/api/jobs/${id}/stop`,{method:'POST'}); loadJobs(); }
+async function deleteJob(id) {
+  if (!confirm(`删除任务 #${id} 及其日志？此操作不可恢复。`)) return;
+  const r = await api(`/api/jobs/${id}`, { method:'DELETE' });
+  if (!r.ok) { alert('❌ ' + (r.error || '删除失败')); return; }
+  selectedJobIds.delete(String(id));
+  loadJobs(); loadStats();
+}
+let _jobLogTimer = null;
+let _jobLogId = null;
+
+function closeJobLog() {
+  if (_jobLogTimer) clearInterval(_jobLogTimer);
+  _jobLogTimer = null;
+  _jobLogId = null;
+  document.getElementById('job-log-modal').classList.remove('open');
+}
+
+async function refreshJobLog() {
+  if (!_jobLogId) return;
+  const content = document.getElementById('job-log-content');
+  try {
+    const r = await fetch(`/api/jobs/${_jobLogId}/log?max_bytes=50000`);
+    const text = await r.text();
+    const nearBottom = content.scrollHeight - content.scrollTop - content.clientHeight < 40;
+    content.textContent = text || '日志暂未写入，请稍候…';
+    if (nearBottom) content.scrollTop = content.scrollHeight;
+  } catch (err) {
+    content.textContent = '读取日志失败：' + ((err && err.message) || '网络错误');
+  }
+}
+
+function showLog(id, live = false) {
+  closeJobLog();
+  _jobLogId = id;
+  document.getElementById('job-log-title').childNodes[0].nodeValue = `任务 #${id} 日志 `;
+  document.getElementById('job-log-live').textContent = live ? '● 实时刷新（2 秒）' : '';
+  document.getElementById('job-log-content').textContent = '正在加载日志…';
+  document.getElementById('job-log-modal').classList.add('open');
+  refreshJobLog();
+  if (live) _jobLogTimer = setInterval(refreshJobLog, 2000);
+}
+
+// ======= 注册提交 =======
+async function submitReg() {
+  const countEl = document.getElementById('reg-count');
+  const workersEl = document.getElementById('reg-workers');
+  const count = Math.max(1, Math.min(200, parseInt(countEl.value) || 1));
+  const workers = Math.max(1, Math.min(16, parseInt(workersEl.value) || 3));
+  countEl.value = count;
+  workersEl.value = workers;
+  const source = document.getElementById('reg-source').value;
+  // 先保存邀请码
+  const invite = document.getElementById('reg-invite').value.trim();
+  if (invite) await api('/api/config', { method:'POST', json:{ invite_code: invite } });
+  const r = await api('/api/register', { method:'POST', json:{ count, workers, email_source: source } });
+  if (r.ok) { alert(`✅ 已提交 ${r.jobs.length} 个任务`); loadStats(); loadJobs(); }
+  else alert('❌ 提交失败');
+}
+
+// ======= 统一邮箱导入 (复刻 turb /api/emails/import) =======
+let _importSource = 'outlook';
+const SOURCE_HINTS = {
+          outlook:      '当前: Outlook',
+  generic_api:  '当前: Generic API (自建/yangyang/mailnest 本地取码接口)',
+  imap:         '当前: IMAP (QQ/Gmail/自建服务器)',
+};
+document.querySelectorAll('.source-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.source-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    _importSource = btn.dataset.source;
+    document.querySelectorAll('.import-pane').forEach(p => p.style.display = 'none');
+    const pane = document.getElementById('import-' + _importSource);
+    if (pane) pane.style.display = '';
+    const hint = document.getElementById('import-source-hint');
+    if (hint) hint.textContent = SOURCE_HINTS[_importSource] || '';
+  });
+});
+
+async function doImportEmailText(textOrFile) {
+  const body = { source: _importSource };
+  if (typeof textOrFile === 'string') body.text = textOrFile;
+  else body.file_path = textOrFile;
+
+  if (_importSource === 'imap') {
+    body.imap_server = document.getElementById('import-imap-server').value.trim();
+    body.imap_port   = parseInt(document.getElementById('import-imap-port').value) || 993;
+    body.imap_ssl    = document.getElementById('import-imap-ssl').value === '1';
+  }
+
+  const resultSpan = document.getElementById('import-result');
+  resultSpan.textContent = '⏳ 导入中...';
+  try {
+    const r = await api('/api/emails/import', { method:'POST', json: body, timeout: 30000 });
+    if (r && r.ok) {
+      resultSpan.textContent = `✅ 新增 ${r.inserted} · 跳过 ${r.skipped} (解析 ${r.parsed} 行)`;
+      if (typeof textOrFile === 'string') document.querySelectorAll('.import-pane textarea').forEach(t => t.value = '');
+      loadEmails();
+    } else {
+      resultSpan.textContent = '❌ ' + ((r && r.error) || '导入失败');
+    }
+  } catch (err) {
+    const reason = err && err.name === 'AbortError' ? '请求超时' : (err && err.message) || '网络错误';
+    resultSpan.textContent = `❌ ${reason}`;
+    console.error('[import]', err);
+  }
+}
+
+document.getElementById('btn-import-now')?.addEventListener('click', async () => {
+  const resultSpan = document.getElementById('import-result');
+  const btn = document.getElementById('btn-import-now');
+  const t0 = Date.now();
+  // 计时器: 长任务时实时显示耗时, 避免看起来"没反应"
+  const tick = setInterval(() => {
+    resultSpan.textContent = `⏳ 导入中... ${Math.round((Date.now()-t0)/1000)}s`;
+  }, 1000);
+  btn.disabled = true;
+  try {
+    const ta = document.querySelector('#import-' + _importSource + ' textarea');
+    const text = (ta?.value || '').trim();
+    if (!text) { resultSpan.textContent = '⚠️ 请先粘贴内容'; return; }
+    const body = { source: _importSource, text };
+    if (_importSource === 'imap') {
+      body.imap_server = document.getElementById('import-imap-server').value.trim();
+      body.imap_port   = parseInt(document.getElementById('import-imap-port').value) || 993;
+      body.imap_ssl    = document.getElementById('import-imap-ssl').value === '1';
+    }
+    const r = await api('/api/emails/import', { method:'POST', json: body, timeout: 30000 });
+    const secs = Math.round((Date.now()-t0)/1000);
+    if (r && r.ok) {
+      resultSpan.textContent = `✅ 导入完成 (${secs}s): 新增 ${r.inserted} · 跳过 ${r.skipped}`;
+      document.querySelectorAll('.import-pane textarea').forEach(t => t.value = '');
+      loadEmails();
+    } else {
+      resultSpan.textContent = '❌ ' + ((r && r.error) || '导入失败');
+    }
+  } catch (err) {
+    const secs = Math.round((Date.now()-t0)/1000);
+    const reason = err && err.name === 'AbortError' ? `请求超时 (${secs}s)` : (err && err.message) || '网络错误';
+    resultSpan.textContent = `❌ ${reason} — 请重试或查看后端日志`;
+    console.error('[import]', err);
+  } finally {
+    clearInterval(tick);
+    btn.disabled = false;
+  }
+});
+
+document.getElementById('btn-import-file')?.addEventListener('click', () => {
+  document.getElementById('import-file').click();
+});
+document.getElementById('import-file')?.addEventListener('change', async (e) => {
+  const f = e.target.files[0];
+  if (!f) return;
+  const text = await f.text();
+  await doImportEmailText(text);
+  e.target.value = '';
+});
+
+// ======= 事件绑定 =======
+document.querySelectorAll('[data-step-for]').forEach(button => {
+  button.addEventListener('click', () => {
+    const input = document.getElementById(button.dataset.stepFor);
+    if (!input) return;
+    const step = parseInt(button.dataset.step, 10) || 0;
+    const min = parseInt(input.min, 10);
+    const max = parseInt(input.max, 10);
+    const current = parseInt(input.value, 10) || (Number.isFinite(min) ? min : 0);
+    const next = current + step;
+    input.value = Math.max(Number.isFinite(min) ? min : next, Math.min(Number.isFinite(max) ? max : next, next));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+});
+document.getElementById('btn-register')?.addEventListener('click', submitReg);
+document.getElementById('btn-cancel-pending')?.addEventListener('click', async () => {
+  if (confirm('取消所有排队？')) { await api('/api/jobs/cancel-pending',{method:'POST'}); loadJobs(); loadStats(); }
+});
+document.getElementById('btn-refresh-emails')?.addEventListener('click', loadEmails);
+document.getElementById('btn-refresh-cards')?.addEventListener('click', loadCards);
+document.getElementById('btn-refresh-jobs')?.addEventListener('click', loadJobs);
+document.getElementById('btn-delete-selected')?.addEventListener('click', async () => {
+  const ids = [...selectedJobIds];
+  if (!ids.length) { alert('请先勾选要删除的任务'); return; }
+  if (!confirm(`删除已选中的 ${ids.length} 个任务及其日志？此操作不可恢复。`)) return;
+  const r = await api('/api/jobs/batch-delete', { method:'POST', json:{ ids } });
+  if (!r.ok) { alert('❌ ' + (r.error || '删除失败')); return; }
+  (r.deleted || []).forEach(id => selectedJobIds.delete(String(id)));
+  const skipped = r.errors || [];
+  if (skipped.length) alert(`已删除 ${r.deleted.length} 个任务；${skipped.length} 个未删除：${skipped.map(x => '#'+x.id+' '+x.error).join('；')}`);
+  loadJobs(); loadStats();
+});
+document.getElementById('btn-close-job-log')?.addEventListener('click', closeJobLog);
+document.getElementById('job-log-modal')?.addEventListener('click', (event) => {
+  if (event.target.id === 'job-log-modal') closeJobLog();
+});
+document.getElementById('btn-save-roxy')?.addEventListener('click', saveRoxyConfig);
+document.getElementById('btn-fp-health')?.addEventListener('click', loadFingerprintHealth);
+document.getElementById('btn-open-roxy')?.addEventListener('click', () => {
+  alert('请先安装并启动 RoxyBrowser，再在配置中填写本机 API 地址和 Token。');
+});
+document.getElementById('btn-get-proxy')?.addEventListener('click', () => {
+  alert('请在代理服务商处获取代理 API 地址，然后粘贴到上方输入框。');
+});
+document.getElementById('btn-save-proxies')?.addEventListener('click', async () => {
+  const pool = document.getElementById('proxy-pool').value.split('\n').filter(l=>l.trim());
+  const extractApi = document.getElementById('proxy-extract-api').value.trim();
+  const r = await api('/api/proxies', { method:'POST', json:{ proxy_pool: pool, extract_api: extractApi } });
+  alert(r.ok ? `✅ ${pool.length} 个代理 + 提取API 已保存` : '❌ 保存失败');
+});
+document.getElementById('btn-save-config')?.addEventListener('click', async () => {
+  await api('/api/config', { method:'POST', json:{ invite_code: document.getElementById('cfg-invite').value.trim() } });
+  alert('✅ 已保存');
+});
+document.getElementById('btn-save-reg-invite')?.addEventListener('click', async () => {
+  const code = document.getElementById('reg-invite').value.trim();
+  const r = await api('/api/config', { method:'POST', json:{ invite_code: code } });
+  if (r.ok) {
+    document.getElementById('cfg-invite').value = code;
+    alert(code ? '✅ 邀请码已保存，注册成功后自动兑换' : '✅ 已清空邀请码');
+  } else {
+    alert('❌ 保存失败：' + (r.error || '未知错误'));
+  }
+});
+document.getElementById('btn-add-card')?.addEventListener('click', async () => {
+  const r = await api('/api/cards', { method:'POST', json:{
+    card_number: document.getElementById('card-number').value.trim(),
+    expiry: document.getElementById('card-expiry').value.trim(),
+    cvv: document.getElementById('card-cvv').value.trim(),
+    billing_zip: document.getElementById('card-zip').value.trim(),
+    billing_country: document.getElementById('card-country').value.trim() || 'US',
+    note: document.getElementById('card-note').value.trim(),
+  }});
+  alert(r.ok ? '✅ 已添加' : '❌ '+(r.error||'失败')); loadCards();
+});
+document.getElementById('btn-import-cards')?.addEventListener('click', async () => {
+  const textarea = document.getElementById('card-bulk-text');
+  const result = document.getElementById('card-import-result');
+  const text = textarea.value.trim();
+  if (!text) { result.textContent = '⚠️ 请先粘贴银行卡信息'; return; }
+  result.textContent = '⏳ 正在识别并加密保存...';
+  try {
+    const r = await api('/api/cards/import', { method:'POST', json:{ text } });
+    if (r && r.ok) {
+      result.textContent = `✅ 已添加 ${r.inserted} 张${r.failed ? ` · ${r.failed} 行未识别` : ''}`;
+      if (r.errors?.length) result.textContent += `：${r.errors.join('；')}`;
+      if (r.inserted) textarea.value = '';
+      loadCards();
+    } else {
+      result.textContent = '❌ ' + ((r && r.error) || '导入失败');
+    }
+  } catch (err) {
+    result.textContent = '❌ ' + ((err && err.message) || '网络错误');
+  }
+});
+
+// ======= 启动 =======
+(async () => {
+  await Promise.all([ loadConfig(), loadFingerprintHealth(), loadAccounts(), loadEmails(), loadCards(), loadJobs() ]);
+  loadStats();
+  setInterval(() => { loadStats(); loadJobs(); }, 3000);
+})();
+</script>
+</body>
+</html>
