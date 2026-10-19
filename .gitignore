@@ -1,0 +1,32 @@
+# 本地配置与凭证
+.env
+.card_key
+*.key
+*.pem
+*.p12
+*.pfx
+
+# 本地数据库、邮箱/银行卡/代理池、运行日志与调试产物
+muse.sqlite3
+*.sqlite3
+*.db
+data/
+_probe/
+_logs/
+logs/
+cache/
+用于注册的邮箱.txt
+
+# Python 运行产物
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+
+# 本地编辑器/系统文件
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+Desktop.ini
