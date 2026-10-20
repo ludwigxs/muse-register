@@ -154,7 +154,13 @@
   .sidebar .tab:hover { border: 0; background: #f5f7ff; color: #377dff; }
   .sidebar .tab.active { border: 0; background: #eaf0ff; color: #3f64f4; }
   .sidebar .tab.active span { color: #3f64f4; }
-  .sidebar-footer { margin-top: auto; padding: 18px 16px; border-top: 1px solid #ebeef5; color: #94a3b8; font-size: 12px; }
+  .sidebar-footer { margin-top: auto; padding: 14px 12px 16px; border-top: 1px solid #ebeef5; color: #94a3b8; font-size: 12px; }
+  .sidebar-footer-title { padding: 0 4px 10px; color: #94a3b8; font-size: 11px; }
+  .sidebar-links { display: flex; flex-direction: column; gap: 4px; }
+  .sidebar-links a { display: flex; align-items: center; gap: 10px; min-height: 34px; padding: 0 10px; border-radius: 6px; color: #64748b; text-decoration: none; font-size: 13px; font-weight: 600; }
+  .sidebar-links a span { display: inline-flex; width: 16px; justify-content: center; color: #64748b; font-size: 16px; }
+  .sidebar-links a:hover { background: #f5f7ff; color: #377dff; }
+  .sidebar-links a:hover span { color: #377dff; }
   .app-main { min-height: 100vh; margin-left: 224px; padding: 20px 28px 36px; }
   .content-header { display: flex; align-items: center; justify-content: space-between; min-height: 28px; margin-bottom: 14px; }
   .content-header h1 { margin: 0; color: #1f2937; font-size: 22px; font-weight: 700; }
@@ -186,7 +192,17 @@
       <button type="button" class="tab" data-tab="fingerprint"><span aria-hidden="true">&#9635;</span> 指纹浏览器</button>
       <button type="button" class="tab" data-tab="config"><span aria-hidden="true">&#9881;</span> 配置</button>
     </nav>
-    <div class="sidebar-footer">Muse by Meta 本地控制台</div>
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-title">Muse by Meta 本地控制台</div>
+      <div class="sidebar-links" aria-label="项目链接">
+        <a href="https://t.me/+NvkoAVwOkEw2NmIx" target="_blank" rel="noopener noreferrer">
+          <span aria-hidden="true">➤</span> TG 交流群
+        </a>
+        <a href="https://github.com/ludwigxs/muse-register" target="_blank" rel="noopener noreferrer">
+          <span aria-hidden="true">◉</span> Github 仓库
+        </a>
+      </div>
+    </div>
   </aside>
 
   <main class="app-main">
